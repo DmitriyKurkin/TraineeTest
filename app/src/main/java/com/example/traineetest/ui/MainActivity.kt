@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted{
             viewModel.users.collect {
                 adapter.submitList(it)
             }
