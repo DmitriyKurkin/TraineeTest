@@ -1,5 +1,5 @@
-package data.api
-import data.model.User
+package com.example.traineetest.data.api
+import com.example.traineetest.data.model.User
 import retrofit2.http.GET
 interface ApiService{
     @GET("users")

@@ -1,4 +1,4 @@
-package data.api
+package com.example.traineetest.data.api
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

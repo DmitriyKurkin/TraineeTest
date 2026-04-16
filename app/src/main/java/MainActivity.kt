@@ -1,18 +1,23 @@
 package com.example.traineetest
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import data.api.RetrofitClient
+import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.core.view.WindowInsetsCompat
 import kotlinx.coroutines.launch
+import com.example.traineetest.viewmodel.UserAdapter
+import com.example.traineetest.data.api.RetrofitClient
+import com.example.traineetest.ui.UserAdapter
+import com.example.traineetest.viewmodel.UserViewModel
+
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: UserAdapter
-
+    private lateinit var viewModel: UserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,14 +32,13 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        viewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
         lifecycleScope.launch {
-            try {
-                val users = RetrofitClient.api.getUsers()
-                adapter.submitList(users)
-            } catch (e: Exception) {
-                e.printStackTrace()
+            viewModel.users.collect {
+                adapter.submitList(it)
             }
         }
-
+        viewModel.loadUsers()
     }
 }

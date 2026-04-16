@@ -3,11 +3,13 @@ package com.example.traineetest
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import data.model.User
-import android.widget.ImageView
+import com.example.traineetest.R
+import com.example.traineetest.data.model.User
+
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     private var list = listOf<User>()
     fun submitList(newList: List<User>){
@@ -26,7 +28,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         val phone: TextView = view.findViewById(R.id.phone)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): UserViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder{
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_user,parent,false)
             return UserViewHolder(view)
@@ -45,7 +47,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         holder.phone.text = user.phone
 
         Glide.with(holder.itemView)
-            .load(user.avatar)
+            .load(user.avatarUrl)
             .into(holder.avatar)
     }
 }

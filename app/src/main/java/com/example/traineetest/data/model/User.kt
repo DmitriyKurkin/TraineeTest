@@ -1,4 +1,4 @@
-package data.model
+package com.example.traineetest.data.model
 
 data class User(
     val id: String,
