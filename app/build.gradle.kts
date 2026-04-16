@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.traineetest"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.traineetest"

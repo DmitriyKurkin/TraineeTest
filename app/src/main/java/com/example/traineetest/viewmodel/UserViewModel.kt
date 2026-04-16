@@ -7,7 +7,7 @@ import com.example.traineetest.data.model.User
 import com.example.traineetest.data.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-
+import android.util.Log
 class UserViewModel : ViewModel() {
 
     private val repository = UserRepository()
@@ -20,7 +20,7 @@ class UserViewModel : ViewModel() {
             try {
                 _users.value = repository.getUsers()
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("API", e.stackTraceToString())
             }
         }
     }

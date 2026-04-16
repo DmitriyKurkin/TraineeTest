@@ -6,6 +6,6 @@ import com.example.traineetest.data.model.User
 class UserRepository {
 
     suspend fun getUsers(): List<User> {
-        return RetrofitClient.api.getUsers()
+        return RetrofitClient.api.getUsers().items
     }
 }
