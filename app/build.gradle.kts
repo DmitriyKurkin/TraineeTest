@@ -1,7 +1,6 @@
 plugins {
-    id("com.android.application") version "8.5.0"
-    id("org.jetbrains.kotlin.android") version "1.9.24"
-    id("org.jetbrains.kotlin.kapt") version "1.9.24"
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -34,15 +33,20 @@ android {
 
 dependencies {
 
-    implementation("com.github.bumptech.glide:glide:4.16.0")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
+        implementation("androidx.appcompat:appcompat:1.7.0")
+        implementation("androidx.activity:activity-ktx:1.9.2")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+        implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
+        implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
+        implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+        implementation("com.github.bumptech.glide:glide:4.16.0")
+
+        implementation("com.squareup.retrofit2:retrofit:2.9.0")
+        implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
 }

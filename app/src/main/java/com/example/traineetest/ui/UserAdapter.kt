@@ -31,7 +31,8 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder{
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_user,parent,false)
-            return UserViewHolder(view)
+
+        return UserViewHolder(view)
     }
 
     override fun getItemCount() = list.size
