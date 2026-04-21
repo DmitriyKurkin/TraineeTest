@@ -14,13 +14,18 @@ class UserViewModel : ViewModel() {
 
     private val _users = MutableStateFlow<List<User>>(emptyList())
     val users: StateFlow<List<User>> = _users
-
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
     fun loadUsers() {
         viewModelScope.launch {
+            _isLoading.value = true
             try {
-                _users.value = repository.getUsers()
+                val newUsers = repository.getUsers()
+                _users.value = newUsers
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                _isLoading.value = false
             }
         }
     }

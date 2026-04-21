@@ -1,7 +1,6 @@
 package com.example.traineetest.ui
 
 import android.content.Intent
-import com.example.traineetest.ui.NoInternetActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +16,8 @@ import com.example.traineetest.data.repository.NetworkUtils
 import com.example.traineetest.viewmodel.UserViewModel
 import com.example.traineetest.R
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.coroutines.launch
+
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: UserViewModel by viewModels()
@@ -45,7 +46,14 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         swipeRefresh.setOnRefreshListener {
-            viewModel.loadUsers()
+            Toast.makeText(this, "Список пытается обновиться...", Toast.LENGTH_SHORT).show()
+            if (NetworkUtils.isInternetAvailable(this)) {
+                viewModel.loadUsers()
+            } else {
+                swipeRefresh.isRefreshing = false
+                startActivity(Intent(this, NoInternetActivity::class.java))
+                finish()
+            }
         }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
@@ -62,11 +70,16 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.users.collect {
-                allUser = it
-                adapter.submitList(it)
-                swipeRefresh.isRefreshing = false
+        lifecycleScope.launch {
+            viewModel.users.collect { users ->
+                allUser = users
+                adapter.submitList(users)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.isLoading.collect { isLoading ->
+                swipeRefresh.isRefreshing = isLoading
             }
         }
 
