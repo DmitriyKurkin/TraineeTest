@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
-    android:padding="16dp"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    >
+    android:layout_height="match_parent">
 
-     <SearchView
-         android:id="@+id/searchView"
-         android:layout_width="378dp"
-         android:layout_height="wrap_content"
-         android:queryHint="Поиск сотрудника"
-         app:iconifiedByDefault="false"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"/>
+     <LinearLayout
+         android:id="@+id/main"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical"
+         android:padding="16dp"
+         tools:context=".ui.MainActivity">
 
-<androidx.recyclerview.widget.RecyclerView
-android:id="@+id/recyclerView"
-android:layout_width="match_parent"
-android:layout_height="match_parent"/>
+          <SearchView
+              android:id="@+id/searchView"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:queryHint="Поиск сотрудника"
+              android:iconifiedByDefault="false" />
 
-</LinearLayout>
+          <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/recyclerView"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" />
+
+     </LinearLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

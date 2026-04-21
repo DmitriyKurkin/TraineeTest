@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
+import android.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +16,7 @@ import com.example.traineetest.data.model.UserFilter
 import com.example.traineetest.data.repository.NetworkUtils
 import com.example.traineetest.viewmodel.UserViewModel
 import com.example.traineetest.R
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: UserViewModel by viewModels()
@@ -37,13 +37,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         adapter = UserAdapter()
-
+        val swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val searchView = findViewById<SearchView>(R.id.searchView)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        swipeRefresh.setOnRefreshListener {
+            viewModel.loadUsers()
+        }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.users.collect {
                 allUser = it
                 adapter.submitList(it)
+                swipeRefresh.isRefreshing = false
             }
         }
 
