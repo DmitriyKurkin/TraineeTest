@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:padding="16dp"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,9 +12,14 @@
     >
 
      <SearchView
-android:id="@+id/searchView"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"/>
+         android:id="@+id/searchView"
+         android:layout_width="378dp"
+         android:layout_height="wrap_content"
+         android:queryHint="Поиск сотрудника"
+         app:iconifiedByDefault="false"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"/>
 
 <androidx.recyclerview.widget.RecyclerView
 android:id="@+id/recyclerView"
