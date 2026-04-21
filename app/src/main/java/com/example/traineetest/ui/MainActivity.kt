@@ -1,5 +1,7 @@
-package com.example.traineetest
+package com.example.traineetest.ui
 
+import android.content.Intent
+import com.example.traineetest.ui.NoInternetActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +15,7 @@ import com.example.traineetest.data.model.User
 import com.example.traineetest.data.model.UserFilter
 import com.example.traineetest.data.repository.NetworkUtils
 import com.example.traineetest.viewmodel.UserViewModel
+import com.example.traineetest.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,10 +28,12 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        if (NetworkUtils.isInternetAvailable(this)) {
-            Toast.makeText(this, "Секундочку, гружусь...", Toast.LENGTH_SHORT).show()
+        if (!NetworkUtils.isInternetAvailable(this)) {
+            startActivity(Intent(this, NoInternetActivity::class.java))
+            finish()
+            return
         } else {
-            Toast.makeText(this, "Не могу обновить данные. Проверь соединение с интернетом.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Секундочку, гружусь...", Toast.LENGTH_SHORT).show()
         }
 
         adapter = UserAdapter()

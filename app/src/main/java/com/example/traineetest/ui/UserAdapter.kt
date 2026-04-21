@@ -1,4 +1,4 @@
-package com.example.traineetest
+package com.example.traineetest.ui
 
 import android.view.LayoutInflater
 import android.view.View

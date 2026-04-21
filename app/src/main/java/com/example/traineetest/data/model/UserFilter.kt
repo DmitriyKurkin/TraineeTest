@@ -3,14 +3,14 @@ package com.example.traineetest.data.model
 object UserFilter {
 
     fun filter(
-        User: List<User>,
+        users: List<User>,
         query: String
     ): List<User> {
-        if (query.isBlank()) return User
+        if (query.isBlank()) return users
 
         val queryVariants = UserSearchUtils.getSearchVariants(query)
 
-        return User.filter { user ->
+        return users.filter { user ->
             val fields = listOf(
                 user.firstName,
                 user.lastName,

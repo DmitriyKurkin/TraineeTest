@@ -20,7 +20,7 @@ class UserViewModel : ViewModel() {
             try {
                 _users.value = repository.getUsers()
             } catch (e: Exception) {
-                Log.e("API", e.message ?: "null")
+                e.printStackTrace()
             }
         }
     }
