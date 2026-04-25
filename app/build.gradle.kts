@@ -29,25 +29,32 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
 }
 
 dependencies {
-
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+        implementation("androidx.compose.material:material-icons-extended")
+        implementation("androidx.compose.material:material")
+        implementation("androidx.appcompat:appcompat:1.7.0")
+        implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+        implementation("androidx.activity:activity-compose:1.9.2")
+        implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+        implementation("androidx.compose.ui:ui")
+        implementation("androidx.compose.material3:material3")
+        implementation("androidx.compose.ui:ui-tooling-preview")
+        implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.2")
+        implementation("io.coil-kt:coil-compose:2.6.0")
         implementation("androidx.appcompat:appcompat:1.7.0")
         implementation("androidx.activity:activity-ktx:1.9.2")
-
         implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
         implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
-
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
-
-        implementation("androidx.recyclerview:recyclerview:1.3.2")
-
-        implementation("com.github.bumptech.glide:glide:4.16.0")
-
         implementation("com.squareup.retrofit2:retrofit:2.9.0")
         implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-
 }
