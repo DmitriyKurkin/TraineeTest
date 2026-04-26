@@ -280,6 +280,7 @@ fun MainUserScreen(
                         items(users) { user ->
                             UserListItem(
                                 user = user,
+                                sortType = sortType,
                                 onClick = {
                                     onUserClick(user)
                                 }
@@ -299,6 +300,7 @@ fun MainUserScreen(
 @Composable
 fun UserListItem(
     user: User,
+    sortType: SortType,
     onClick: () -> Unit
 ) {
     Row(
@@ -328,6 +330,13 @@ fun UserListItem(
                 text = user.department,
                 style = MaterialTheme.typography.bodyMedium
             )
+            if (sortType == SortType.BIRTHDAY) {
+                Text(
+                    text = formatBirthday(user.birthday),
+                    color = Color.Black,
+                    fontSize = 12.sp
+                )
+            }
         }
     }
 }
@@ -437,5 +446,15 @@ fun calculateAge(birthday: String): Int {
         age
     } catch (e: Exception) {
         0
+    }
+}
+fun formatBirthday(date: String): String {
+    return try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("d MMM", Locale("ru"))
+        val parsedDate = inputFormat.parse(date)
+        parsedDate?.let { outputFormat.format(it) } ?: date
+    } catch (e: Exception) {
+        date
     }
 }
