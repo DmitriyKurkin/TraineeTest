@@ -47,7 +47,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="Постораемся бысто починить"
+            android:text="Постараемся бысто все починить"
             android:textColor="@android:color/darker_gray"
             android:textSize="20sp" />
 

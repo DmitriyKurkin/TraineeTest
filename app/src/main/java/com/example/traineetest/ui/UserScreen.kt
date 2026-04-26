@@ -34,6 +34,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.ui.unit.sp
+
 enum class SortType {
     ALPHABET,
     BIRTHDAY
@@ -54,8 +58,20 @@ fun UserScreen(
     var expanded by remember { mutableStateOf(false) }
     var sortType by remember { mutableStateOf(SortType.ALPHABET) }
     var selectedUser by remember { mutableStateOf<User?>(null) }
+    var selectedDepartment by remember { mutableStateOf("All") }
 
-    val filteredUsers = UserFilter.filter(users, searchText)
+    val departments = listOf("All") + users
+        .map { it.department }
+        .distinct()
+        .sorted()
+
+    val searchedUsers = UserFilter.filter(users, searchText)
+
+    val filteredUsers = if (selectedDepartment == "All") {
+        searchedUsers
+    } else {
+        searchedUsers.filter { it.department == selectedDepartment }
+    }
 
     val sortedUsers = when (sortType) {
         SortType.ALPHABET -> filteredUsers.sortedBy {
@@ -93,6 +109,9 @@ fun UserScreen(
                 onExpandedChange = { expanded = it },
                 sortType = sortType,
                 onSortTypeChange = { sortType = it },
+                departments = departments,
+                selectedDepartment = selectedDepartment,
+                onDepartmentClick = { selectedDepartment = it },
                 users = sortedUsers,
                 isLoading = isLoading,
                 pullRefreshState = pullRefreshState,
@@ -118,6 +137,9 @@ fun MainUserScreen(
     onExpandedChange: (Boolean) -> Unit,
     sortType: SortType,
     onSortTypeChange: (SortType) -> Unit,
+    departments: List<String>,
+    selectedDepartment: String,
+    onDepartmentClick: (String) -> Unit,
     users: List<User>,
     isLoading: Boolean,
     pullRefreshState: androidx.compose.material.pullrefresh.PullRefreshState,
@@ -188,6 +210,30 @@ fun MainUserScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(departments) { department ->
+                    Text(
+                        text = department,
+                        color = Color.Black,
+                        fontWeight = if (department == selectedDepartment) {
+                            FontWeight.Bold
+                        } else {
+                            FontWeight.SemiBold
+                        },
+                        modifier = Modifier
+                            .clickable {
+                                onDepartmentClick(department)
+                            }
+                            .padding(vertical = 8.dp)
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(12.dp))
 
             Box(
@@ -195,19 +241,52 @@ fun MainUserScreen(
                     .fillMaxSize()
                     .pullRefresh(pullRefreshState)
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(users) { user ->
-                        UserListItem(
-                            user = user,
-                            onClick = {
-                                onUserClick(user)
-                            }
+                if (users.isEmpty() && searchText.isNotBlank()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 80.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            tint = Color.Gray,
+                            modifier = Modifier.size(96.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Мы никого не нашли",
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = "Попробуйте скорректировать запрос",
+                            color = Color.Gray,
+                            fontSize = 16.sp
                         )
                     }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(bottom = 16.dp)
+                    ) {
+                        items(users) { user ->
+                            UserListItem(
+                                user = user,
+                                onClick = {
+                                    onUserClick(user)
+                                }
+                            )
+                        }
+                    }
                 }
-
                 PullRefreshIndicator(
                     refreshing = isLoading,
                     state = pullRefreshState,
@@ -217,7 +296,6 @@ fun MainUserScreen(
         }
     }
 }
-
 @Composable
 fun UserListItem(
     user: User,
@@ -234,7 +312,7 @@ fun UserListItem(
             model = user.avatarUrl,
             contentDescription = "Avatar",
             modifier = Modifier
-                .size(72.dp)
+                .size(75.dp)
                 .clip(CircleShape)
         )
 
