@@ -1,26 +1,31 @@
+# Gradle
 .gradle/
-.idea/
-out/
-.kotlin/
 build/
-generated/
+**/build/
 
+# Android / Kotlin
+local.properties
+.kotlin/
+.externalNativeBuild/
+.cxx/
+captures/
 
+# IntelliJ IDEA / Android Studio
+.idea/
 *.iml
+*.ipr
+*.iws
 
+# OS
+.DS_Store
+__MACOSX/
+._*
 
-*.class
-*.jar
-*.war
-*.ear
-
+# Logs
 *.log
 
-.DS_Store
-Thumbs.db
-
+# Secrets
 .env
 *.local
-local.properties
-
-
+*.jks
+*.keystore
