@@ -1,11 +1,13 @@
 .gradle/
 build/
 out/
-
+generated/
 .idea/
+.kotlin/
+
 *.iml
 
-.kotlin/
+
 *.class
 *.jar
 *.war
@@ -20,4 +22,4 @@ Thumbs.db
 *.local
 local.properties
 
-generated/
+
