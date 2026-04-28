@@ -1,9 +1,10 @@
 .gradle/
-build/
-out/
-generated/
 .idea/
+out/
 .kotlin/
+build/
+generated/
+
 
 *.iml
 
