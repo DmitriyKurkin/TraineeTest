@@ -1,7 +1,13 @@
 package com.example.traineetest.data.api
-import com.example.traineetest.data.model.User
+
 import retrofit2.http.GET
-interface ApiService{
+import retrofit2.http.Headers
+
+interface ApiService {
+    @Headers(
+        "Accept: application/json",
+        "Prefer: code=200, example=success"
+    )
     @GET("users")
     suspend fun getUsers(): UsersResponse
 }

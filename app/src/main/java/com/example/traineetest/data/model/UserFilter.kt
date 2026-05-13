@@ -11,21 +11,22 @@ object UserFilter {
         val queryVariants = UserSearchUtils.getSearchVariants(query)
 
         return users.filter { user ->
-            val fields = listOfNotNull(
+            val fields = listOf(
                 user.firstName,
                 user.lastName,
-                user.department,
-                user.position,
-                "${user.firstName.orEmpty()} ${user.lastName.orEmpty()}".trim(),
-                "${user.lastName.orEmpty()} ${user.firstName.orEmpty()}".trim()
+                user.userTag.removePrefix("@"),
+                "${user.firstName} ${user.lastName}",
+                "${user.lastName} ${user.firstName}"
             )
 
-            val fieldVariants = fields.flatMap { fields ->
-                UserSearchUtils.getSearchVariants(fields)
+            val fieldVariants = fields.flatMap { field ->
+                UserSearchUtils.getSearchVariants(field)
             }
 
-            queryVariants.any { q ->
-                fieldVariants.any { field -> field.contains(q) }
+            queryVariants.any { queryVariant ->
+                fieldVariants.any { fieldVariant ->
+                    fieldVariant.contains(queryVariant)
+                }
             }
         }
     }
